@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.ag.blacjac.CardTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2023-08-19T12:27:16" hostname="LAPTOP-IS8B2KI2" time="0.058">
+  <properties/>
+  <testcase name="canGetValueOfFive()" classname="com.ag.blacjac.CardTest" time="0.039"/>
+  <testcase name="canGetValueOfJack()" classname="com.ag.blacjac.CardTest" time="0.002"/>
+  <testcase name="canGetValueOfKing()" classname="com.ag.blacjac.CardTest" time="0.001"/>
+  <testcase name="canGetValueOfAce()" classname="com.ag.blacjac.CardTest" time="0.002"/>
+  <testcase name="canGetValueOfTwo()" classname="com.ag.blacjac.CardTest" time="0.001"/>
+  <testcase name="canGetValueOfQueen()" classname="com.ag.blacjac.CardTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
