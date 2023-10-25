@@ -29,38 +29,19 @@ public class Main {
         Matcher peopleMatcher = peoplePattern.matcher(people);
 
         int totalSalaries = 0;
+        Employee employee = null;
         while (peopleMatcher.find()) {
-            totalSalaries += switch (peopleMatcher.group("role")) {
-                case "Programmer" -> {
-                    Programmer programmer = new Programmer(peopleMatcher.group());
-                    System.out.println(programmer.toString());
-                    yield programmer.getSalary();
-                }
-                case "Manager" -> {
-                    Manager manager = new Manager(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
-                    System.out.println(manager.toString());
-                    yield manager.getSalary();
-                }
-                case "CEO" -> {
-                    CEO ceo = new CEO(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
-                    System.out.println(ceo.toString());
-                    yield ceo.getSalary();
-                }
-                case "Analyst" -> {
-                    Analyst analyst = new Analyst(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
-                    System.out.println(analyst.toString());
-                    yield analyst.getSalary();
-                }
-                default -> {
-                    yield 0;
-                }
+            employee = switch (peopleMatcher.group("role")) {
+                case "Programmer" -> new Programmer(peopleMatcher.group());
+                case "Manager" -> new Manager(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
+                case "CEO" -> new CEO(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
+                case "Analyst" -> new Analyst(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
+                default -> new Nobody("Nobody");
             };
-            NumberFormat currencyInstance = NumberFormat.getCurrencyInstance();
-//            System.out.printf("%s %s %s%n", peopleMatcher.group("firstName"), peopleMatcher.group("lastName"), peopleMatcher.group("role"));
-//            System.out.printf("Total is %s%n", currencyInstance.format(totalSalaries));
+            System.out.println(employee.toString());
+            totalSalaries+= employee.getSalary();
         }
-
-
+        System.out.println(totalSalaries);
     }
 }
 
