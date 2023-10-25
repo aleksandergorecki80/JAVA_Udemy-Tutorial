@@ -5,17 +5,12 @@ import java.util.regex.Pattern;
 public class Main {
     public static void main(String[] args) {
         String people = """
-                     Flinstone, Fred, 1/1/1900, Programmer, {locpd=2500,yoe=10,iq=140}
-                     Flinstone, Fred, 1/1/1900, Programmer, {locpd=4000,yoe=10,iq=140}
-                     Flinstone, Fred, 1/1/1900, Programmer, {locpd=5000,yoe=10,iq=140}
-                     Flinstone, Fred, 1/1/1900, Programmer, {locpd=6000,yoe=10,iq=140}
-                     Flinstone, Fred, 1/1/1900, Programmer, {locpd=7000,yoe=10,iq=140}
-                     Flinstone, Fred, 1/1/1900, Programmer, {locpd=9000,yoe=10,iq=140}
-                     Flinstone, Fred, 1/1/1900, Programmerzzzzz, {locpd=10000,yoe=10,iq=140}
-                     Flinstone2, Fred2, 1/1/1900, Programmer, {locpd=1300,yoe=14,iq=100}
-                     Flinstone3, Fred3, 1/1/1900, Programmer, {locpd=2300,yoe=8,iq=105}
-                     Flinstone4, Fred4, 1/1/1900, Programmer, {locpd=1630,yoe=3,iq=115}
-                     Flinstone5, Fred5, 1/1/1900, Programmer, {locpd=5,yoe=10,iq=100}
+                     Flinstone, Fred, 1/1/1900, Programmer, {locpd=900,yoe=10,iq=140}
+                     Flinstone1, Fred1, 1/1/1900, Programmer, {locpd=1000,yoe=10,iq=140}
+                     Flinstone2, Fred2, 1/1/1900, Programmer, {locpd=130,yoe=14,iq=100}
+                     Flinstone3, Fred3, 1/1/1900, Programmer, {locpd=230,yoe=8,iq=105}
+                     Flinstone4, Fred4, 1/1/1900, Programmer, {locpd=163,yoe=3,iq=115}
+                     Flinstone5, Fred5, 1/1/1900, Programmer, {locpd=5,yoe=10,iq=104}
                      Rubble, Barney, 2/2/1905, Manager, {orgSize=300,dr=10}
                      Rubble2, Barney2, 2/2/1905, Manager, {orgSize=100,dr=4}
                      Rubble3, Barney3, 2/2/1905, Manager, {orgSize=200,dr=2}
@@ -33,30 +28,28 @@ public class Main {
         Pattern peoplePattern = Pattern.compile(peopleRegex);
         Matcher peopleMatcher = peoplePattern.matcher(people);
 
-        String progRegex = "\\w+\\=(?<locpd>\\w+)\\,\\w+\\=(?<yoe>\\w+)\\,\\w+\\=(?<iq>\\w+)";
-        Pattern progPat = Pattern.compile(progRegex);
-
         int totalSalaries = 0;
         while (peopleMatcher.find()) {
             totalSalaries += switch (peopleMatcher.group("role")) {
                 case "Programmer" -> {
-                    Matcher progMat = progPat.matcher(peopleMatcher.group("details"));
-                    if (progMat.find()) {
-                        String locpd = progMat.group("locpd");
-                        String yoe = progMat.group("yoe");
-                        String iq = progMat.group("iq");
-                        System.out.printf("Programmer loc: %s yoe: %s iq: %s%n", locpd, yoe, iq);
-                    }
-                    yield 3500;
-                }
-                case "CEO" -> {
-                    yield 5500;
-                }
-                case "Analyst" -> {
-                    yield 2500;
+                    Programmer programmer = new Programmer(peopleMatcher.group());
+                    System.out.println(programmer.toString());
+                    yield programmer.getSalary();
                 }
                 case "Manager" -> {
-                    yield 4000;
+                    Manager manager = new Manager(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
+                    System.out.println(manager.toString());
+                    yield manager.getSalary();
+                }
+                case "CEO" -> {
+                    CEO ceo = new CEO(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
+                    System.out.println(ceo.toString());
+                    yield ceo.getSalary();
+                }
+                case "Analyst" -> {
+                    Analyst analyst = new Analyst(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
+                    System.out.println(analyst.toString());
+                    yield analyst.getSalary();
                 }
                 default -> {
                     yield 0;
