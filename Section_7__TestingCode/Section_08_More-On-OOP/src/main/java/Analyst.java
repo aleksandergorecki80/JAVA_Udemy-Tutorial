@@ -23,8 +23,8 @@ public class Analyst extends Employee {
         return 35  * this.projectCount;
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s, : %s : %s", this.firstName, this.lastName, this.moneyFormat.format(getSalary()));
-    }
+//    @Override
+//    public String toString() {
+//        return String.format("%s, : %s : %s", this.firstName, this.lastName, this.moneyFormat.format(getSalary()));
+//    }
 }

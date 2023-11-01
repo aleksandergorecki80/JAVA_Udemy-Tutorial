@@ -1,6 +1,7 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//public class Programmer extends Employee implements Apple, IEmployee {
 public class Programmer extends Employee {
     private int linesOfCode = 0;
     private int yearsOfExperience = 0;
@@ -23,4 +24,7 @@ public class Programmer extends Employee {
         return 30 + this.linesOfCode * this.yearsOfExperience * this.iq;
     }
 
+    public int doSomething(){
+        return 11;
+    }
 }

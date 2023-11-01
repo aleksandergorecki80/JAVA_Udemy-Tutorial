@@ -1,11 +1,9 @@
-import java.text.NumberFormat;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
         String people = """
-                     Flinstone, Fred, 1/1/1900, Programmer, {locpd=900,yoe=10,iq=140}
+                     Flinstone, Fred, 1/1/1900, Programmerdddddd, {locpd=900,yoe=10,iq=140}
                      Flinstone1, Fred1, 1/1/1900, Programmer, {locpd=1000,yoe=10,iq=140}
                      Flinstone2, Fred2, 1/1/1900, Programmer, {locpd=130,yoe=14,iq=100}
                      Flinstone3, Fred3, 1/1/1900, Programmer, {locpd=230,yoe=8,iq=105}
@@ -22,22 +20,15 @@ public class Main {
                      Flinstone4, Wilma4, 3/3/1910, Analyst, {projectCount=6}
                      Flinstone5, Wilma5, 3/3/1910, Analyst, {projectCount=9}
                      Rubble, Betty, 4/4/1915, CEO, {avgStockPrice=300}
+                     Rubble, Betty, 4/4/1915, CEO, {avgStockPrice=300}
                 """;
 
-        String peopleRegex = "(?<lastName>\\w+),\\s*(?<firstName>\\w+),\\s*(?<dob>\\d{1,2}/\\d{1,2}/\\d{4}),\\s*(?<role>\\w+)(?:,\\s*\\{(?<details>.*)\\})?";
-        Pattern peoplePattern = Pattern.compile(peopleRegex);
-        Matcher peopleMatcher = peoplePattern.matcher(people);
+        Matcher peopleMatcher = Employee.PEOPLE_MATCHER.matcher(people);
 
         int totalSalaries = 0;
         Employee employee = null;
         while (peopleMatcher.find()) {
-            employee = switch (peopleMatcher.group("role")) {
-                case "Programmer" -> new Programmer(peopleMatcher.group());
-                case "Manager" -> new Manager(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
-                case "CEO" -> new CEO(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
-                case "Analyst" -> new Analyst(peopleMatcher.group()); // if there is group() empty without any input it refers to a single line
-                default -> new Nobody("Nobody");
-            };
+            employee = Employee.createEmployee(peopleMatcher.group());
             System.out.println(employee.toString());
             totalSalaries+= employee.getSalary();
         }

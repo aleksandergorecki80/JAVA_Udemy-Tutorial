@@ -24,8 +24,8 @@ public class CEO extends Employee {
         return 35 * this.avgStockPrice;
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s, : %s : %s", this.firstName, this.lastName, this.moneyFormat.format(getSalary()));
-    }
+//    @Override
+//    public String toString() {
+//        return String.format("%s, : %s : %s", this.firstName, this.lastName, this.moneyFormat.format(getSalary()));
+//    }
 }
