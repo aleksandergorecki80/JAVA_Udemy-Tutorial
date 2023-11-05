@@ -22,7 +22,7 @@ public abstract class Employee {
         this.dob = null;
     }
 
-    public Employee(String personText) {
+    protected Employee(String personText) {
         this.peopleMatcher = Employee.PEOPLE_MATCHER.matcher(personText);
 
         if (peopleMatcher.find()) {
@@ -32,7 +32,7 @@ public abstract class Employee {
         }
     }
 
-    public static final Employee createEmployee(String employeeText){
+    public static final IEmployee createEmployee(String employeeText){
         Matcher peopleMatcher = Employee.PEOPLE_MATCHER.matcher(employeeText);
         if (peopleMatcher.find()) {
             return switch (peopleMatcher.group("role")) {
@@ -40,7 +40,13 @@ public abstract class Employee {
                 case "Manager" -> new Manager(employeeText); // if there is group() empty without any input it refers to a single line
                 case "CEO" -> new CEO(employeeText); // if there is group() empty without any input it refers to a single line
                 case "Analyst" -> new Analyst(employeeText); // if there is group() empty without any input it refers to a single line
-                default -> new DummyEmployee();
+//                default -> new Employee() {
+//                    @Override
+//                    public int getSalary() {
+//                        return 0;
+//                    }
+//                };
+                default -> () -> 0;
             };
         } else {
             return new DummyEmployee();
@@ -58,9 +64,21 @@ public abstract class Employee {
         return this.getSalary() * 1.10;
     }
 
-    private static final class DummyEmployee extends Employee {
+//    private static void MyMethod(){           ****** STATIC methods can't access the class fields
+//        this.lastName = "";
+//    }
+
+
+    private static final class DummyEmployee extends Employee implements IEmployee {
         @Override
         public int getSalary() {
+            return 0;
+        }
+    }
+
+    private final class MyInnerClass {
+        public int getStuff() {
+            System.out.println(firstName);
             return 0;
         }
     }

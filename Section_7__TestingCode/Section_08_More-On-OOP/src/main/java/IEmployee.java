@@ -1,3 +1,3 @@
 public interface IEmployee {
-    int getSalary();
+   int getSalary();
 }

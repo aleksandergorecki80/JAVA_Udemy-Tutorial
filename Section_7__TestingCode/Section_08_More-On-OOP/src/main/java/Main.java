@@ -1,7 +1,21 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class Main {
     public static void main(String[] args) {
+
+        Flyer flyer = new CEO("Rubble, Betty, 4/4/1915, CEO, {avgStockPrice=300}");
+        flyer.fyl();
+        System.out.println(flyer.getHoursFlown());
+
+        Chef programmerThatCooks = new Programmer("Flinstone1, Fred1, 1/1/1900, Programmer, {locpd=1000,yoe=10,iq=140}");
+        System.out.println(programmerThatCooks.yellAtPeople());
+
+
         String people = """
                      Flinstone, Fred, 1/1/1900, Programmerdddddd, {locpd=900,yoe=10,iq=140}
                      Flinstone1, Fred1, 1/1/1900, Programmer, {locpd=1000,yoe=10,iq=140}
@@ -26,13 +40,84 @@ public class Main {
         Matcher peopleMatcher = Employee.PEOPLE_MATCHER.matcher(people);
 
         int totalSalaries = 0;
-        Employee employee = null;
+        IEmployee employee = null;
+
+        List<IEmployee> employees  = new LinkedList<>();
+
         while (peopleMatcher.find()) {
             employee = Employee.createEmployee(peopleMatcher.group());
-            System.out.println(employee.toString());
-            totalSalaries+= employee.getSalary();
+
+
+            employees.add(employee);
+            System.out.println(employees + " === employees");
+
+
+
+//            System.out.println(employee.getClass());
+
+            if(employee.getClass().equals(Programmer.class)){
+                System.out.println("=====PROGRAMMER=====");
+            }
+
+            if(employee instanceof Programmer){
+                System.out.println("-------- instance of PROGRAMMER -----");
+                System.out.println(((Programmer) employee).getIq());
+            }
+
+            if(employee instanceof Programmer coder){
+                System.out.println("-------- instance of PROGRAMMER with pattern matching-----");
+                System.out.println(coder.getIq());
+            }
         }
+
+        employees.remove(4);
+
+        IEmployee employee1 = employees.get(0);
+        IEmployee employee2 = employees.get(1);
+        IEmployee employee3 = employees.get(2);
+
+        employees.remove(employee1);
+        employees.remove(employee2);
+        employees.remove(employee3);
+
+
+
+        List<String> undesirables = List.of("Wilma5", "Barney4", "Fred2");
+
+//        List<String> undesirablesNames = new ArrayList<>();
+//
+//        undesirablesNames.add("Wilma5");
+//        undesirablesNames.add("Barney4");
+//        undesirablesNames.add("Fred2");
+
+        removeUndesirables(employees, undesirablesNames);
+
+        for (IEmployee worker : employees){
+            System.out.println(worker.toString());
+            totalSalaries+= worker.getSalary();
+        }
+
         System.out.println(totalSalaries);
+        System.out.println(employees);
+
+        Weirdo larry = new Weirdo("Larry", "Moore", LocalDate.of(1925, 1, 12));
+        System.out.println(larry.firstName());
+        System.out.println(larry.doSomething());
+
+        Weirdo snake = new Weirdo("Jack", "Snake");
+        System.out.println(snake.sayHello());
+    }
+
+    private static void removeUndesirables(List<IEmployee> employees, List<String> removalNames) {
+        for(Iterator<IEmployee> iterator = employees.iterator(); iterator.hasNext(); ){
+            IEmployee worker = iterator.next();
+            if(worker instanceof Employee tempWorker){
+//                Employee tempWorker = (Employee) worker;
+                if(removalNames.contains(tempWorker.firstName)){
+                    iterator.remove();
+                }
+            }
+        }
     }
 }
 
