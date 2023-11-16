@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class Employee {
+public abstract class Employee implements IEmployee {
     protected final DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("M/d/yyyy");
     protected final NumberFormat moneyFormat = NumberFormat.getCurrencyInstance();
     protected static final String PEOPLE_REGEX = "(?<lastName>\\w+),\\s*(?<firstName>\\w+),\\s*(?<dob>\\d{1,2}/\\d{1,2}/\\d{4}),\\s*(?<role>\\w+)(?:,\\s*\\{(?<details>.*)\\})?";
@@ -86,11 +86,17 @@ public abstract class Employee {
 //    }
 
 
-    private static final class DummyEmployee extends Employee implements IEmployee {
+    private static final class DummyEmployee extends Employee  {
         @Override
         public int getSalary() {
             return 0;
         }
+
+    }
+
+    @Override
+    public int compareTo(IEmployee o) {
+        return 0;
     }
 
     private final class MyInnerClass {

@@ -85,7 +85,6 @@ public class Main {
         System.out.println(employees.contains(employee5));
         System.out.println(randomEmployee.equals(employee5) + " are equal?");
 
-//        employees.set(0, Employee.createEmployee());
 
         Object[] genericArray = employees.toArray();
         IEmployee[] otherArray = employees.toArray(new IEmployee[0]);
@@ -119,16 +118,7 @@ public class Main {
 
         removeUndesirables(employees, undesirables);
 
-//        employees.sort((o1, o2) -> {
-//            // if there is an "o1" that is an instance of Employee make the variable "emp1" of type Employee
-//            if( o1 instanceof Employee emp1 && o2 instanceof Employee emp2 ){
-////                    Employee emp1 = (Employee) o1;
-////                    Employee emp2 = (Employee) o2;
-//                int lastNameResult = emp1.lastName.compareTo(emp2.lastName);
-//                return lastNameResult != 0 ? lastNameResult : Integer.compare(emp1.getSalary(), emp2.getSalary());
-//            }
-//            return 0;
-//        });
+
 
         Collections.sort(employees, (o1, o2) -> {
             // if there is an "o1" that is an instance of Employee make the variable "emp1" of type Employee
@@ -140,6 +130,8 @@ public class Main {
             }
             return 0;
         });
+
+        Collections.sort(employees, Comparator.naturalOrder());
 
         for (IEmployee worker : employees){
             System.out.println("=======  " + worker.toString());
@@ -155,8 +147,6 @@ public class Main {
 
         Weirdo snake = new Weirdo("Jack", "Snake");
         System.out.println(snake.sayHello());
-
-
     }
 
 
