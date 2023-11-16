@@ -96,7 +96,8 @@ public abstract class Employee implements IEmployee {
 
     @Override
     public int compareTo(IEmployee o) {
-        return 0;
+        Employee other = (Employee) o;
+        return this.lastName.compareTo(other.lastName);
     }
 
     private final class MyInnerClass {

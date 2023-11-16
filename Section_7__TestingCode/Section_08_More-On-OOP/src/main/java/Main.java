@@ -19,7 +19,7 @@ public class Main {
                      Flinstone, Fred2, 1/1/1900, Programmer, {locpd=130,yoe=14,iq=100}
                      Flinstone3, Fred3, 1/1/1900, Programmer, {locpd=230,yoe=8,iq=105}
                      Alinstone4, Fred4, 1/1/1900, Programmer, {locpd=163,yoe=3,iq=115}
-                     Flinstone5, Fred5, 1/1/1900, Programmer, {locpd=5,yoe=10,iq=104}
+                     Flinstone5, Fred5, 1/1/1900, ProgrammerNNNN, {locpd=5,yoe=10,iq=104}
                      Rubble, Barney, 2/2/1905, Manager, {orgSize=300,dr=10}
                      Rubble2, Barney2, 2/2/1905, Manager, {orgSize=100,dr=4}
                      Rubble3, Barney3, 2/2/1905, Manager, {orgSize=200,dr=2}
@@ -132,6 +132,7 @@ public class Main {
         });
 
         Collections.sort(employees, Comparator.naturalOrder());
+        Collections.shuffle();
 
         for (IEmployee worker : employees){
             System.out.println("=======  " + worker.toString());
