@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,5 +63,19 @@ public class Programmer extends Employee implements IEmployee, Chef {
 
     public Pattern getProgrammerPat() {
         return programmerPat;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Programmer that = (Programmer) o;
+        return iq == that.iq;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), iq);
     }
 }

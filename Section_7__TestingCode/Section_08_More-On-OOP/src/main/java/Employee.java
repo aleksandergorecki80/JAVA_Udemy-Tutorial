@@ -1,6 +1,7 @@
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,7 @@ public abstract class Employee {
     protected String lastName;
     protected String firstName;
     protected LocalDate dob;
+    protected String role;
 
     public static final Pattern PEOPLE_MATCHER = Pattern.compile(PEOPLE_REGEX);
 
@@ -29,6 +31,7 @@ public abstract class Employee {
             this.lastName = peopleMatcher.group("lastName");
             this.firstName = peopleMatcher.group("firstName");
             this.dob = LocalDate.from(dtFormatter.parse(peopleMatcher.group("dob")));
+            this.role = peopleMatcher.group("role");
         }
     }
 
@@ -46,7 +49,7 @@ public abstract class Employee {
 //                        return 0;
 //                    }
 //                };
-                default -> () -> 0;
+                default -> new DummyEmployee();
             };
         } else {
             return new DummyEmployee();
@@ -57,12 +60,26 @@ public abstract class Employee {
 
     @Override
     public String toString() {
-        return String.format("%s, : %s salary: %s, bonus: %s", this.firstName, this.lastName, this.moneyFormat.format(getSalary()), this.moneyFormat.format(getBonus()));
+        return String.format("%s, : %s salary: %s, role: %s", this.firstName, this.lastName, this.moneyFormat.format(getSalary()), this.role);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return lastName.equals(employee.lastName) && firstName.equals(employee.firstName) && dob.equals(employee.dob);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lastName, firstName, dob);
     }
 
     public double getBonus(){
         return this.getSalary() * 1.10;
     }
+
 
 //    private static void MyMethod(){           ****** STATIC methods can't access the class fields
 //        this.lastName = "";
